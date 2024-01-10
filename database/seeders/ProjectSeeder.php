@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Project;
+use App\Models\Technology;
 use Faker\Generator as Faker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,7 +18,10 @@ class ProjectSeeder extends Seeder
     {
 
         $categories = Category::all();
-        $ids = $categories->pluck('id');
+        $categoryIds = $categories->pluck('id');
+
+        $technologies = Technology::all();
+        $techIds = $technologies->pluck('id');
 
         for ($i = 0; $i < 10; $i++) {
 
@@ -26,8 +30,10 @@ class ProjectSeeder extends Seeder
             $new_Project->link_project = $faker->url();
             $new_Project->language = $faker->randomElement(['html', 'css', 'javascript', 'php']);
             $new_Project->description = $faker->sentence();
-            $new_Project->category_id = $faker->optional()->randomElement($ids);
+            $new_Project->category_id = $faker->optional()->randomElement($categoryIds);
+
             $new_Project->save();
+            $new_Project->technologies()->attach($faker->randomElements($techIds, null));
         }
     }
 }
