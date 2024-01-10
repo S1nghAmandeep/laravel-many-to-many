@@ -22,13 +22,24 @@
                 <label for="language" class="form-label">Language</label>
                 <input type="text" class="form-control" name="language" id="language" placeholder="Language">
               </div>
-              <div>
+              <div class="mb-3">
                 <select class="form-select" name="category_id" id="category_id" aria-label="Default select example">
                   <option selected>Select Category</option>
                   @foreach ($categories as $category)
                   <option value="{{ $category->id }}">{{ $category->name }}</option>
                   @endforeach
                 </select>
+              </div>
+              <p>Select the Technologies:</p>
+              <div class="mb-3 d-flex flex-wrap gap-4">
+                @foreach ($technologies as $technology)
+              <div class="form-check">
+                  <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}" id="technology_{{$technology->id}}" @checked( in_array($technology->id, old('technologies', [])))>
+                  <label class="form-check-label" for="technology_{{$technology->id}}">
+                    {{$technology->name}}
+                  </label>
+              </div>
+              @endforeach
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">Descrizione</label>
