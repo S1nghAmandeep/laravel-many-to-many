@@ -37,12 +37,12 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        // $request->validate([
-        //     'titile' => 'required|max:50|string|',
-        //     'link_project' => 'required|string',
-        //     'description' => 'nullable|string',
-        //     'technologies' => 'exists:technologies,id'
-        // ]);
+        $request->validate([
+            'titile' => 'required|max:50|string|',
+            'link_project' => 'required|string',
+            'description' => 'nullable|string',
+            'technologies' => 'exists:technologies,id'
+        ]);
 
         $data = $request->all();
         $new_project = Project::create($data);
@@ -69,7 +69,10 @@ class ProjectController extends Controller
     {
 
         $categories = Category::orderBy('name', 'asc')->get();
-        return view('admin.projects.edit', compact('project', 'categories'));
+        $technologies = Technology::orderBy('name', 'asc')->get();
+
+
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -77,8 +80,23 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        // $request->validate([
+        //     'titile' => 'required|max:50|string',
+        //     'link_project' => 'required|string',
+        //     'description' => 'nullable|string',
+        //     'technologies' => 'exists:technologies,id'
+        // ]);
+
         $data = $request->all();
         $project->update($data);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($data['technologies']);
+        } else {
+            // si può usare anche sync passando l'array vuoto
+            // $project->technologies()->sync([]);
+            $project->technologies()->detach();
+        }
 
         return redirect()->route('admin.projects.show', $project);
     }
