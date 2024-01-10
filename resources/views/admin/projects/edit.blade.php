@@ -21,13 +21,24 @@
                     <label for="language" class="form-label">Language</label>
                     <input type="text" class="form-control" name="language" id="language" placeholder="Language" value="{{ $project->language }}">
                   </div>
-                  <div>
+                  <div class="mb-3">
                     <select class="form-select" name="category_id" id="category_id" aria-label="Default select example">
                       <option selected>Select Category</option>
                       @foreach ($categories as $category)
                       <option @selected( old('category_id', optional($project->category)->id) == $category->id ) value="{{ $category->id }}">{{ $category->name }}</option>
                       @endforeach
                     </select>
+                  </div>
+                  <p>Select the Technologies:</p>
+                  <div class="mb-3 d-flex flex-wrap gap-4">
+                    @foreach ($technologies as $technology)
+                    <div class="form-check">
+                        <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}" id="technology_{{$technology->id}}" @checked( in_array($technology->id, old('technologies', $project->technologies->pluck('id')->all())))>
+                        <label class="form-check-label" for="technology_{{$technology->id}}">
+                          {{$technology->name}}
+                        </label>
+                    </div>
+                    @endforeach
                   </div>
                   <div class="mb-3">
                     <label for="description" class="form-label">Descrizione</label>
@@ -42,5 +53,14 @@
                 </form>
               </div>
         </div>
+        @if ($errors->any())
+        <div class="alert alert-danger mt-3">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     </section>
 @endsection
