@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -25,8 +26,9 @@ class ProjectController extends Controller
     {
 
         $categories = Category::orderBy('name', 'asc')->get();
+        $technologies = Technology::orderBy('name', 'asc')->get();
 
-        return view('admin.projects.create', compact('categories'));
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -34,9 +36,20 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        // dd($request->all());
+        // $request->validate([
+        //     'titile' => 'required|max:50|string|',
+        //     'link_project' => 'required|string',
+        //     'description' => 'nullable|string',
+        //     'technologies' => 'exists:technologies,id'
+        // ]);
 
+        $data = $request->all();
         $new_project = Project::create($data);
+
+        if ($request->has('technologies')) {
+            $new_project->technologies()->attach($data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', $new_project);
     }
