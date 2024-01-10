@@ -15,7 +15,7 @@
                 <li class="badge text-bg-success">{{ $technology->name }}</li>
                 @endforeach
             </ul>
-            <ul>
+            <ul class="list-inline">
                 <li class="mb-3">
                     <a class="btn btn-primary btn-sm" href="{{ route('admin.projects.edit', $project) }}">Edit</a>
                 </li>
