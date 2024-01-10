@@ -33,13 +33,13 @@
               <p>Select the Technologies:</p>
               <div class="mb-3 d-flex flex-wrap gap-4">
                 @foreach ($technologies as $technology)
-              <div class="form-check">
-                  <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}" id="technology_{{$technology->id}}" @checked( in_array($technology->id, old('technologies', [])))>
-                  <label class="form-check-label" for="technology_{{$technology->id}}">
-                    {{$technology->name}}
-                  </label>
-              </div>
-              @endforeach
+                <div class="form-check">
+                    <input class="form-check-input" name="technologies[]" type="checkbox" value="{{ $technology->id }}" id="technology_{{$technology->id}}" @checked( in_array($technology->id, old('technologies', [])))>
+                    <label class="form-check-label" for="technology_{{$technology->id}}">
+                      {{$technology->name}}
+                    </label>
+                </div>
+                @endforeach
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">Descrizione</label>
@@ -52,5 +52,14 @@
         
             </form>
           </div>
+          @if ($errors->any())
+              <div class="alert alert-danger mt-3">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
     </section>
 @endsection
