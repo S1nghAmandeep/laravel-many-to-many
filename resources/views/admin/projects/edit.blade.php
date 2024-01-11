@@ -18,12 +18,8 @@
                     <input type="url" class="form-control" name="link_project" id="link_project" placeholder="Url Project" value="{{ $project->link_project }}">
                   </div>
                   <div class="mb-3">
-                    <label for="language" class="form-label">Language</label>
-                    <input type="text" class="form-control" name="language" id="language" placeholder="Language" value="{{ $project->language }}">
-                  </div>
-                  <div class="mb-3">
                     <select class="form-select" name="category_id" id="category_id" aria-label="Default select example">
-                      <option selected>Select Category</option>
+                      <option value="">Select Category</option>
                       @foreach ($categories as $category)
                       <option @selected( old('category_id', optional($project->category)->id) == $category->id ) value="{{ $category->id }}">{{ $category->name }}</option>
                       @endforeach

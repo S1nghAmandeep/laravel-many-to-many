@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title', 50);
             $table->string('link_project');
-            $table->string('language', 10);
             $table->string('description');
             $table->timestamps();
         });

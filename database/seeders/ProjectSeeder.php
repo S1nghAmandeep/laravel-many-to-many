@@ -28,7 +28,6 @@ class ProjectSeeder extends Seeder
             $new_Project = new Project();
             $new_Project->title = $faker->name();
             $new_Project->link_project = $faker->url();
-            $new_Project->language = $faker->randomElement(['html', 'css', 'javascript', 'php']);
             $new_Project->description = $faker->sentence();
             $new_Project->category_id = $faker->optional()->randomElement($categoryIds);
 

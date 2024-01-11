@@ -38,7 +38,7 @@ class ProjectController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'titile' => 'required|max:50|string|',
+            'title' => 'required|max:50|string|',
             'link_project' => 'required|string',
             'description' => 'nullable|string',
             'technologies' => 'exists:technologies,id'
@@ -80,12 +80,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        // $request->validate([
-        //     'titile' => 'required|max:50|string',
-        //     'link_project' => 'required|string',
-        //     'description' => 'nullable|string',
-        //     'technologies' => 'exists:technologies,id'
-        // ]);
+        $request->validate([
+            'title' => 'required|max:50|string',
+            'link_project' => 'required|string',
+            'description' => 'nullable|string',
+            'technologies' => 'exists:technologies,id'
+        ]);
 
         $data = $request->all();
         $project->update($data);
